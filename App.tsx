@@ -1,18 +1,35 @@
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import Main from "./pages/Main";
+import {useEffect} from "react";
+import * as MediaLibrary from 'expo-media-library';
+import {createStackNavigator} from "@react-navigation/stack";
+import TopNav from "./components/TopNav";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
-  );
+
+const Stack = createStackNavigator();
+
+
+const App = () => {
+
+    useEffect(() => {
+        // onMount
+        // request permission
+        MediaLibrary.requestPermissionsAsync()
+            .then((response) => {
+                console.log(response);
+            })
+    }, [])
+    return (
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName={'All'}>
+                <Stack.Screen name={"All"} component={Main} options={{
+                    headerTitle: (props) => <TopNav {...props}/>,
+                    headerTitleAlign: 'center'
+                }}/>
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
