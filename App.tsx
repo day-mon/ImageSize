@@ -21,8 +21,8 @@ const App = () => {
             })
     }, [])
     return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName={'All'}>
+        <NavigationContainer >
+            <Stack.Navigator initialRouteName={'All'} >
                 <Stack.Screen name={"All"} component={Main} options={{
                     headerTitle: (props) => <TopNav {...props}/>,
                     headerTitleAlign: 'center'
