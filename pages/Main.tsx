@@ -4,7 +4,8 @@ import {ActivityIndicator, Image, Linking, Pressable, Text, TouchableOpacity, Vi
 import * as MediaLibrary from 'expo-media-library';
 import {PermissionStatus} from 'expo-media-library';
 import {FlatGrid} from "react-native-super-grid";
-import {stat} from "react-native-fs";
+import * as FileSystem from 'expo-file-system' // Updated based on docs
+
 
 const Main = () => {
     const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
@@ -13,18 +14,30 @@ const Main = () => {
     const [loading, setLoading] = useState(false);
 
 
+    const getFileSize = async fileUri => {
+        let fileInfo = await FileSystem.getInfoAsync(fileUri);
+        return fileInfo.exists ? fileInfo?.size : undefined;
+    };
+
+
+
+
     useEffect(() => {
 
         const getFiles = async () => {
             setLoading(true)
-            const { assets} = await MediaLibrary.getAssetsAsync();
+            const {assets} = await MediaLibrary.getAssetsAsync();
             const selectedImages = assets.map((asset) => {
-                const { uri} = asset;
-                return { uri };
+                const {uri} = asset;
+                return {uri};
             })
 
+            const images = await Promise.all(selectedImages.map(async (image) => {
+                const size = await getFileSize(image.uri);
+                return {...image, size}
+            }));
 
-            setSelectedImages(selectedImages);
+            setSelectedImages(images);
             setLoading(false)
         }
 
@@ -60,7 +73,8 @@ const Main = () => {
             )}
             {(!permissionResponse?.canAskAgain || permissionResponse?.status === PermissionStatus.DENIED) && (
                 <View className="flex flex-col items-center  justify-center h-screen">
-                    <Text className="text-2xl text-center">You need to give us permission to access your photos</Text>
+                    <Text className="text-2xl text-center">You need to give us permission to access your
+                        photos</Text>
                     <Pressable onPress={() => {
                         if (!permissionResponse.canAskAgain) {
                             void Linking.openSettings()
@@ -98,7 +112,7 @@ const Main = () => {
                                 )
                             }}>
                                 <Image source={{uri: item.uri}} style={{borderRadius: 5, height: 100, width: 80}}/>
-                                <Text className="text-gray-700">Image</Text>
+                                <Text className="text-gray-700">{item.size}</Text>
                             </TouchableOpacity>
                         )}
                     />

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "expo-media-library",
-    "slug": "expo-media-library",
+    "name": "image-size",
+    "slug": "image-size",
     "version": "1.0.0",
     "platforms": [
       "ios",
