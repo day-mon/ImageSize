@@ -1,12 +1,11 @@
-import {Button, Text, View} from "react-native";
+import {Pressable, Text, View} from "react-native";
 
 const TopNav = (props) => {
-    // add a filters and all with image count
+    // left aligned Filter button
     return (
-        <View>
-            <Text>TopNav</Text>
+        <View className="flex flex-row justify-between items-center">
+            <Text className="text-2xl font-bold">All</Text>
         </View>
-
     )
 }
 
