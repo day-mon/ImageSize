@@ -19,13 +19,13 @@ const pages = [
         component: Main,
         name: 'All',
         activeIcon: <Fontisto name="picture" size={15} color="black" />,
-        notActiveIcon: <Fontisto name="picture" size={15} color="grey" />
+        notActiveIcon: <Fontisto name="picture" size={12} color="grey" />
     },
     {
         component: Statistics,
         name: 'Stats',
         activeIcon: <AntDesign name="piechart" size={15} color="black" />,
-        notActiveIcon: <AntDesign name="piechart" size={15} color="grey" />
+        notActiveIcon: <AntDesign name="piechart" size={12} color="grey" />
     },
 
 ]

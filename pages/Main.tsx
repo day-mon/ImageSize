@@ -13,7 +13,6 @@ const MB = 1000 * KB;
 const GB = 1000 * MB;
 
 
-
 const GREEN_RANGE_MIN = KB * 100;
 
 const YELLOW_RANGE_MIN = KB * 100;
@@ -21,9 +20,6 @@ const YELLOW_RANGE_MAX = MB;
 
 const ORANGE_RANGE_MIN = MB;
 const ORANGE_RANGE_MAX = MB * 5;
-
-const RED_RANGE = MB * 5;
-
 
 const Main = () => {
     const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
@@ -59,19 +55,12 @@ const Main = () => {
     const getTailwindColorInMB = (size: number) => {
         if (size < GREEN_RANGE_MIN) {
             return 'text-green-600';
-        }
-
-        else if (size >= YELLOW_RANGE_MIN && size <= YELLOW_RANGE_MAX) {
+        } else if (size >= YELLOW_RANGE_MIN && size <= YELLOW_RANGE_MAX) {
             return 'text-yellow-600';
-        }
-
-        else if (size >= ORANGE_RANGE_MIN && size <= ORANGE_RANGE_MAX) {
+        } else if (size >= ORANGE_RANGE_MIN && size <= ORANGE_RANGE_MAX) {
             return 'text-orange-600';
         }
-
-        else {
-            return 'text-red-600';
-        }
+        return 'text-red-600';
 
     }
 
@@ -95,6 +84,8 @@ const Main = () => {
             void getFiles(media.endCursor)
             return
         }
+
+        console.log(selectedImages.length)
 
 
         setLoading(false)
@@ -158,6 +149,7 @@ const Main = () => {
                         itemDimension={80}
                         data={selectedImages}
                         spacing={10}
+                        key={Math.floor(Math.random() * 1000)}
                         renderItem={({item}) => (
                             <TouchableOpacity className={""} onPress={(event) => {
                                 // would you like to delete this image?
